@@ -6,11 +6,10 @@ from __future__ import unicode_literals
 import json
 
 
-class DataProvider(object):
-    # TODO: docs
-
+class MailProvider(object):
     # list of variables we need from the config
     config = []
+    client = None
 
     def load_config(self):
         with open("client_config.json") as config:
@@ -19,12 +18,3 @@ class DataProvider(object):
                 key: full_config[key]
                 for key in self.config
             }
-
-    def fetch(self):
-        return None
-
-    def munge(self, data):
-        return data
-
-    def __call__(self):
-        return self.munge(self.fetch(*self.load_secrets()))

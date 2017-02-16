@@ -4,49 +4,18 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import datetime
-import json
 import logging
 import urllib
 
-from jinja2 import Environment
-from jinja2 import PackageLoader
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers import mail
-from sendgrid.helpers.mail import Content
-
 from yelp_beans.logic.meeting_spec import get_meeting_datetime
 from yelp_beans.logic.meeting_spec import get_users_from_spec
+from yelp_beans.mail_providers.send_grid import SendGrid
 from yelp_beans.models import User
-
-# TODO (rkwills) this belongs in a function
-secrets = json.loads(open("client_secrets.json").read())
-# TODO (rkwills) switch to a yelp sendgrid account
-send_grid_client = SendGridAPIClient(apikey=secrets["SENDGRID_API_KEY"])
-SENDGRID_SENDER = secrets["SENDGRID_SENDER"]
 
 
 def send_single_email(email, subject, template, template_arguments):
-    """ Send an email using the SendGrid API
-        Args:
-            - email :string => the user's work email (ie username@company.com)
-            - subject :string => the subject line for the email
-            - template :string => the template file, corresponding to the email sent.
-            - template_arguments :dictionary => keyword arguments to specify to render_template
-        Returns:
-            - SendGrid response
-    """
-    env = Environment(loader=PackageLoader('yelp_beans', 'templates/email_templates'))
-    template = env.get_template(template)
-    rendered_template = template.render(template_arguments)
-
-    message = mail.Mail(
-        from_email=mail.Email(SENDGRID_SENDER),
-        subject=subject,
-        to_email=mail.Email(email),
-        content=Content("text/html", rendered_template)
-    )
-
-    return send_grid_client.client.mail.send.post(request_body=message.get())
+    client = SendGrid()
+    return client.send_mail(email, subject, template, template_arguments)
 
 
 def send_batch_initial_opt_in_email(users):

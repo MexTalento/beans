@@ -20,10 +20,10 @@ class RestProvider(DataProvider):
         'rest_url'
     ]
 
-    def fetch(self, user, password):
+    def fetch(self):
         return requests.get(
             self.url,
-            auth=HTTPBasicAuth(user, password),
+            auth=HTTPBasicAuth(self.user, self.password),
             timeout=60.0,
         ).json()
 

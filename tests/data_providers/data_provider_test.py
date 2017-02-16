@@ -7,6 +7,13 @@ import json
 
 import pytest
 
+from yelp_beans.data_providers.rest_endpoint import RestProvider
+
+
+def test_rest_provider():
+    provider = RestProvider()
+    assert provider
+
 
 def test_get_secret_file(tmpdir):
     with tmpdir.as_cwd():

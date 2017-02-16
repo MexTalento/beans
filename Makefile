@@ -16,7 +16,7 @@ js: node_modules
 	webpack
 
 client_secrets.json:
-	touch client_secrets.json
+	touch client_config.json
 
 .PHONY: test
 test: development install-hooks
