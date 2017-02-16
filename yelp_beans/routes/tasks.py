@@ -7,7 +7,7 @@ import logging
 
 from flask import Blueprint
 
-from yelp_beans.data_providers.workday import get_json_employee_data
+from yelp_beans.data_providers.rest_endpoint import get_json_employee_data
 from yelp_beans.logic.meeting_spec import get_meeting_datetime
 from yelp_beans.logic.meeting_spec import get_specs_for_current_week
 from yelp_beans.logic.subscription import get_specs_from_subscription

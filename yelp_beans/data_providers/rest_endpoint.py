@@ -8,22 +8,17 @@ import logging
 import requests
 from requests.auth import HTTPBasicAuth
 
+from yelp_beans.data_providers.amazon_s3 import get_json_employee_data_from_s3
 from yelp_beans.data_providers.data_provider import DataProvider
-from yelp_beans.data_providers.s3 import get_json_employee_data_from_s3
 
 
-SERVICE_URL = 'https://elastic.snaplogic.com/api/1/rest/slsched/feed/yelp/projects/Microservices/YelpBeans'
+class RestProvider(DataProvider):
 
-
-class WorkdayProvider(DataProvider):
-
-    secrets = [
-        'workday_user',
-        'workday_password',
+    config = [
+        'rest_user',
+        'rest_password',
+        'rest_url'
     ]
-
-    def __init__(self, url=SERVICE_URL):
-        self.url = url
 
     def fetch(self, user, password):
         return requests.get(
@@ -33,14 +28,9 @@ class WorkdayProvider(DataProvider):
         ).json()
 
 
-def workday(url=SERVICE_URL):
-    provider = WorkdayProvider(url)
-    return provider()
-
-
 def get_json_employee_data():
     logging.info('Reading employees file from S3...')
-    employee_data = workday()
+    employee_data = RestProvider()
 
     # TODO remove once we find a solution for photos
     s3_data = get_json_employee_data_from_s3()

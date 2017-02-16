@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from yelp_beans.data_providers.workday import get_json_employee_data
+from yelp_beans.data_providers.rest_endpoint import get_json_employee_data
 
 
 def test_workday():

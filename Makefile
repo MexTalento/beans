@@ -15,6 +15,9 @@ development: venv install-hooks js
 js: node_modules
 	webpack
 
+client_secrets.json:
+	touch client_secrets.json
+
 .PHONY: test
 test: development install-hooks
 	coverage run -m py.test tests/
