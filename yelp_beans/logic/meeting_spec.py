@@ -24,6 +24,7 @@ def get_specs_for_current_week():
 def get_users_from_spec(meeting_spec):
     logging.info('Meeting subscription for spec:')
     logging.info(meeting_spec.meeting_subscription)
+
     logging.info('All Preferences')
     logging.info(UserSubscriptionPreferences.query().fetch())
 
@@ -38,7 +39,6 @@ def get_users_from_spec(meeting_spec):
 
         if user_preference.preference:
             logging.info('User Preference')
-            logging.info(user_preference.preference)
             logging.info(user_preference.preference.get())
             preference_dt = user_preference.preference.get().datetime
 
