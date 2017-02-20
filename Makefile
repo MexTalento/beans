@@ -48,6 +48,10 @@ serve: development
 deploy: production
 	gcloud app deploy --project yelp-beans --version 1
 
+.PHONY: docs
+	make clean html
+	sh -c 'cd build/html && python -m SimpleHTTPServer 8088'
+
 .PHONY: clean
 clean:
 	rm -rf venv/
